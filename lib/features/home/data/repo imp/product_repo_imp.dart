@@ -14,4 +14,9 @@ class ProductRepoImp extends ProductRepoAb {
   Future<Either<ApiException, ApiResponse>> fetchProducts() async {
     return productDs.fetchProducts(ApiConstants.endPoint);
   }
+
+  @override
+  Future<Either<ApiException, ApiResponse>> fetchCategories() {
+    return productDs.fetchCategories(ApiConstants.categoriesEndPoint);
+  }
 }

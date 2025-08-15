@@ -38,7 +38,7 @@ class _CartPageState extends State<CartPage> {
             );
           } else if (state is CartLoadedState) {
             if (state.products.isEmpty) {
-              return Center(child: Text("Favourites empty"));
+              return Center(child: Text("Cart is empty"));
             }
             return GridView.builder(
               padding: EdgeInsets.symmetric(

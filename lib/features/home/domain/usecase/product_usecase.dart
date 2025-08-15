@@ -11,4 +11,8 @@ class ProductUseCase {
   Future<Either<ApiException, ApiResponse>> execute() async {
     return productRepoAb.fetchProducts();
   }
+
+  Future<Either<ApiException, ApiResponse>> fetchCategories() async {
+    return productRepoAb.fetchCategories();
+  }
 }

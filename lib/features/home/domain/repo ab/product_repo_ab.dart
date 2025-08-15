@@ -4,4 +4,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class ProductRepoAb {
   Future<Either<ApiException, ApiResponse>> fetchProducts();
+  Future<Either<ApiException, ApiResponse>> fetchCategories();
 }

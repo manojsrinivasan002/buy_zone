@@ -9,7 +9,6 @@ import 'package:buy_zone/features/home/data/models/product.dart';
 import 'package:buy_zone/features/home/data/repo%20imp/product_repo_imp.dart';
 import 'package:buy_zone/features/home/domain/usecase/product_usecase.dart';
 import 'package:buy_zone/features/home/presentation/cubit/product_cubit.dart';
-import 'package:buy_zone/features/home/presentation/pages/products_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -28,6 +27,7 @@ void main() async {
         BlocProvider(create: (_) => ProductCubit(sl<ProductUseCase>())),
         BlocProvider(create: (_) => FavCubit(sl<FavDatabase>())),
         BlocProvider(create: (_) => CartCubit(sl<CartDatabase>())),
+        BlocProvider(create: (context) => CatCubit(sl<ProductUseCase>())),
       ],
       child: const MyApp(),
     ),
@@ -39,9 +39,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ProductsPage(),
     );
   }
 }

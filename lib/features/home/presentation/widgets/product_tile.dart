@@ -1,6 +1,7 @@
 import 'package:buy_zone/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:buy_zone/features/favourite/presentation/cubit/fav_cubit.dart';
 import 'package:buy_zone/features/home/data/models/product.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,13 +21,9 @@ class _ProductTileState extends State<ProductTile> {
     return Container(
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: Colors.grey.shade300,
-          style: BorderStyle.solid,
-          width: 0.5,
-        ),
+        border: Border.all(color: Colors.black26, style: BorderStyle.solid),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,10 +54,17 @@ class _ProductTileState extends State<ProductTile> {
               ),
             ],
           ),
-          Image.network(
-            widget.product.thumbnail,
-            height: height * 0.16,
+          CachedNetworkImage(
+            imageUrl: widget.product.thumbnail,
+            height: height * 0.15,
             fit: BoxFit.contain,
+            errorWidget: (context, url, error) {
+              return const Icon(
+                Icons.broken_image,
+                size: 40,
+                color: Colors.grey,
+              );
+            },
           ),
           Text(
             widget.product.title,
