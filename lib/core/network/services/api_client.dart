@@ -1,12 +1,14 @@
 import 'package:buy_zone/core/network/constants/api_constants.dart';
-import 'package:buy_zone/core/network/models/api_exception.dart';
-import 'package:buy_zone/core/network/models/api_response.dart';
+import 'package:buy_zone/core/network/models/app_exception.dart';
+import 'package:buy_zone/core/network/models/response.dart';
+import 'package:buy_zone/core/network/services/exception_handler_mixin.dart';
+import 'package:buy_zone/core/network/services/network_service.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Response;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_pretty_dio_logger/flutter_pretty_dio_logger.dart';
 
-class ApiClient {
+class ApiClient extends NetworkService with ExceptionHandlerMixin {
   late final Dio _dio;
 
   static final ApiClient _instance = ApiClient._internal();
@@ -40,23 +42,26 @@ class ApiClient {
     }
   }
 
-  Future<Either<ApiException, ApiResponse>> get(
-    String endPoint, {
-    Map<String, dynamic>? queryParams,
+  @override
+  String get baseUrl => ApiConstants.baseUrl;
+
+  @override
+  Map<String, dynamic> get headers => ApiConstants.defaultHeaders;
+
+  @override
+  void updateHeader(Map<String, dynamic> data) {
+    Map<String, dynamic> header = {...data, ...headers};
+    _dio.options.headers = header;
+  }
+
+  @override
+  Future<Either<AppException, Response>> get(
+    String endpoint, {
+    Map<String, dynamic>? queryParameters,
   }) async {
-    try {
-      final response = await _dio.get(endPoint, queryParameters: queryParams);
-      return Right(
-        ApiResponse(
-          statusCode: response.statusCode!,
-          data: response.data,
-          message: response.statusMessage,
-        ),
-      );
-    } on DioException catch (e) {
-      return Left(ApiException.fromDioError(e));
-    } catch (e) {
-      return Left(ApiException(errorMsg: "Unknown error occurred: $e"));
-    }
+    return handleException(
+      () => _dio.get(endpoint, queryParameters: queryParameters),
+      endpoint: endpoint,
+    );
   }
 }

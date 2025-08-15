@@ -37,11 +37,11 @@ class Product extends HiveObject {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'] != null ? (json['id'] as num).toInt() : 0,
-      title: json['title']?.toString() ?? "No title",
-      description: json['description']?.toString() ?? "No desc",
-      category: json['category']?.toString() ?? "No category",
+      title: json['title']?.toString() ?? "",
+      description: json['description']?.toString() ?? "",
+      category: json['category']?.toString() ?? "",
       price: json['price'] != null ? (json['price'] as num).toDouble() : 0.0,
-      thumbnail: json['thumbnail']?.toString() ?? "No thumbnail",
+      thumbnail: json['thumbnail']?.toString() ?? "",
       discountPercentage: json['discountPercentage'] != null
           ? (json['discountPercentage'] as num).toDouble()
           : 0.0,
@@ -50,5 +50,19 @@ class Product extends HiveObject {
           ? List<String>.from(json['images'])
           : <String>[],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['title'] = title;
+    map['description'] = description;
+    map['category'] = category;
+    map['price'] = price;
+    map['thumbnail'] = thumbnail;
+    map['discountPercentage'] = discountPercentage;
+    map['rating'] = rating;
+    map['images'] = images;
+    return map;
   }
 }

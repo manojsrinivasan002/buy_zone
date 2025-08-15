@@ -12,4 +12,8 @@ class Category {
       url: json['url']?.toString() ?? "No url",
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {'name': name, 'slug': slug, 'url': url};
+  }
 }

@@ -1,18 +1,19 @@
-import 'package:buy_zone/core/network/models/api_exception.dart';
-import 'package:buy_zone/core/network/models/api_response.dart';
+import 'package:buy_zone/core/network/models/app_exception.dart';
+import 'package:buy_zone/features/home/data/models/cat_res.dart';
+import 'package:buy_zone/features/home/data/models/product_res.dart';
 import 'package:buy_zone/features/home/domain/repo%20ab/product_repo_ab.dart';
 import 'package:dartz/dartz.dart';
 
 class ProductUseCase {
   final ProductRepoAb productRepoAb;
 
-  ProductUseCase(this.productRepoAb);
+  const ProductUseCase(this.productRepoAb);
 
-  Future<Either<ApiException, ApiResponse>> execute() async {
+  Future<Either<AppException, ProductRes>> fetchProducts() async {
     return productRepoAb.fetchProducts();
   }
 
-  Future<Either<ApiException, ApiResponse>> fetchCategories() async {
+  Future<Either<AppException, CatRes>> fetchCategories() async {
     return productRepoAb.fetchCategories();
   }
 }

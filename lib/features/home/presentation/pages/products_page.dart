@@ -1,10 +1,10 @@
-import 'package:buy_zone/features/cart/presentation/pages/cart_page.dart';
-import 'package:buy_zone/features/favourite/presentation/pages/favourites_page.dart';
 import 'package:buy_zone/features/home/presentation/cubit/product_cubit.dart';
 import 'package:buy_zone/features/home/presentation/cubit/product_state.dart';
 import 'package:buy_zone/features/home/presentation/widgets/product_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/cat_cubit.dart';
+import '../cubit/cat_state.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});

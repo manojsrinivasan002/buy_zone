@@ -8,27 +8,14 @@ class ProductCubit extends Cubit<ProductState> {
 
   ProductCubit(this.productUseCase) : super(ProductInitState());
 
-  Future<void> fetchProducts() async {
+  void fetchProducts() async {
     emit(ProductLoadingState());
-    final result = await productUseCase.execute();
-    return result.fold(
-      (exception) => emit(ProductErrorState(errorMsg: exception.errorMsg)),
-      (response) {
-        List<Product> parsedProducts = [];
-        if (response.data is Map<String, dynamic> &&
-            response.data['products'] is List) {
-          parsedProducts = (response.data['products'] as List)
-              .map((json) => Product.fromJson(json))
-              .toList();
-        } else if (response.data is List) {
-          parsedProducts = (response.data as List)
-              .map((json) => Product.fromJson(json))
-              .toList();
-        } else {
-          emit(ProductErrorState(errorMsg: "Unexpected data format"));
-          return;
-        }
-        emit(ProductLoadedState(products: parsedProducts));
+    final result = await productUseCase.fetchProducts();
+    result.fold(
+      (exception) => emit(ProductErrorState(errorMsg: exception.message)),
+      (productResponse) {
+        List<Product> products = productResponse.products ?? [];
+        emit(ProductLoadedState(products: products));
       },
     );
   }
